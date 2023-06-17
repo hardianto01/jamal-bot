@@ -1,0 +1,28 @@
+{
+  "name": "jamal-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bot",
+    "discord",
+    "discord-bot"
+  ],
+  "author": "hardianto01",
+  "license": "MIT",
+  "dependencies": {
+    "@discord-player/extractor": "^4.3.1",
+    "@discordjs/opus": "^0.9.0",
+    "@discordjs/voice": "github:discordjs/voice",
+    "@distube/ytdl-core": "^4.11.10",
+    "discord-player": "^6.5.0",
+    "discord.js": "^14.11.0",
+    "dotenv": "^16.3.0",
+    "opusscript": "^0.0.8",
+    "play-dl": "^1.9.6",
+    "ytdl-core": "^4.11.4"
+  }
+}
