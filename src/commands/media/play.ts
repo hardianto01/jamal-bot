@@ -9,7 +9,7 @@ export default {
         const channel = interaction.member?.voice.channel
         if (!query) return interaction.reply('masukan query url/lagu')
         if (!channel)
-            return interaction.reply('Mmaf Kamu Tidak Terhubung Dalam Voice')
+            return interaction.reply('Maaf Kamu Tidak Terhubung Dalam Voice')
         try {
             const { track, extractor } = await player.play(channel, query, {
                 nodeOptions: {
