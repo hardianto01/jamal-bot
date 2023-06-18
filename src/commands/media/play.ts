@@ -4,6 +4,7 @@ import { Iextra } from '../../typing/queue'
 
 export default {
     command: ['play', 'p'],
+    desc: 'memutar music dari spotify atau youtube',
     async execute(interaction: Message, { player, query }: Iextra) {
         const channel = interaction.member?.voice.channel
         if (!query) return interaction.reply('masukan query url/lagu')

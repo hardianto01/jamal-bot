@@ -3,6 +3,7 @@ import { Iextra } from '../../typing/queue'
 
 export default {
     command: ['stop', 's'],
+    desc: 'menghentikan semua musik',
     async execute(interaction: Message, { player }: Iextra) {
         const exampleEmbed = new EmbedBuilder()
             .setColor(0x0099ff)

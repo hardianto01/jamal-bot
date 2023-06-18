@@ -1,16 +1,15 @@
 // Require the necessary discord.js classes
-import { Events, GatewayIntentBits } from 'discord.js'
+import { EmbedBuilder, Events, GatewayIntentBits } from 'discord.js'
 import 'dotenv/config'
 import * as fs from 'fs'
 import path from 'path'
 import { create } from './lib/client'
 import { ICommands } from './typing/command'
 import { Player } from 'discord-player'
-import {
-    SoundCloudExtractor,
-    SpotifyExtractor,
-} from '@discord-player/extractor'
+import { SpotifyExtractor } from '@discord-player/extractor'
 // import { registerCommands } from './register.command'
+
+export const commands = [] as ICommands[]
 
 const token = process.env.TOKEN
 const main = async () => {
@@ -35,25 +34,21 @@ const main = async () => {
     sound.events.on('playerStart', (queue, track) => {
         if (!queue.metadata) return
         ;(queue.metadata as any).channel.send(
-            `Started playing **${track.title}**!`
+            `Memutar Music **${track.title}**!`
         )
     })
-    sound.events.on('playerFinish', (queue, track) => {
+    sound.events.on('emptyQueue', (queue) => {
         if (!queue.metadata) return
-        ;(queue.metadata as any).channel.send(
-            `Play List Finish!!`
-        )
+        ;(queue.metadata as any).channel.send(`Play List Finish!!`)
     })
     client.once('ready', (c) => {
         console.log(`Ready! Logged in as ${c.user.tag}`)
     })
-    const commands = [] as ICommands[]
     const commandsPath = path.join(__dirname, 'commands')
     const commandFiles = fs.readdirSync(commandsPath)
 
     for (const category of commandFiles) {
         const pathCategory = path.join(commandsPath, category)
-        console.log(pathCategory)
         const dirCategory = fs
             .readdirSync(pathCategory)
             .filter((file) => file.endsWith('.ts'))
@@ -85,6 +80,13 @@ const main = async () => {
             obj.command.find((s) => s.toLowerCase() == command.toLowerCase())
         )
         if (!obj) return
+        if (query.includes('-help')) {
+            m.reply({
+                embeds: [new EmbedBuilder()
+                .setTitle(obj.desc)],
+            })
+            return 
+        }
         let extra = { client, player: sound, query }
         obj.execute(m as any, extra)
     })
