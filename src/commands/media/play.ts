@@ -1,7 +1,6 @@
 import { Message, EmbedBuilder } from 'discord.js'
 import { Iextra } from '../../typing/queue'
 
-
 export default {
     command: ['play', 'p'],
     desc: 'memutar music dari spotify atau youtube',

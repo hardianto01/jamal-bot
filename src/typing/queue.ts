@@ -3,6 +3,6 @@ import { create } from '../lib/client'
 
 export type Iextra = {
     client?: create
-    player: Player 
+    player: Player
     query?: string | undefined
 }

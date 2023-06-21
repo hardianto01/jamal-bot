@@ -3,7 +3,7 @@ import { Iextra } from './queue'
 
 export type ICommands = {
     command: string[]
-    desc: string,
+    desc: string
     category: string
     execute(interaction: Interaction, extra: Iextra): Promise<any>
 }

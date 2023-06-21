@@ -82,10 +82,9 @@ const main = async () => {
         if (!obj) return
         if (query.includes('-help')) {
             m.reply({
-                embeds: [new EmbedBuilder()
-                .setTitle(obj.desc)],
+                embeds: [new EmbedBuilder().setTitle(obj.desc)],
             })
-            return 
+            return
         }
         let extra = { client, player: sound, query }
         obj.execute(m as any, extra)
