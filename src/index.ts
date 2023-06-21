@@ -1,6 +1,7 @@
 // Require the necessary discord.js classes
 import { EmbedBuilder, Events, GatewayIntentBits } from 'discord.js'
 import 'dotenv/config'
+import connect from '../database/connect'
 import * as fs from 'fs'
 import path from 'path'
 import { create } from './lib/client'
@@ -13,6 +14,9 @@ export const commands = [] as ICommands[]
 
 const token = process.env.TOKEN
 const main = async () => {
+
+    // connect to database
+    await connect()
     // Create a new client instance
     const client = new create({
         intents: [
@@ -22,9 +26,8 @@ const main = async () => {
             GatewayIntentBits.GuildVoiceStates,
         ],
     })
-
     const sound = new Player(client)
-
+    client.db.createStg(21, 'inquisitor', 483214, 1643979, 4948924, 27533)
     sound.extractors.loadDefault()
     await sound.extractors.loadDefault()
 
@@ -39,7 +42,7 @@ const main = async () => {
     })
     sound.events.on('emptyQueue', (queue) => {
         if (!queue.metadata) return
-        ;(queue.metadata as any).channel.send(`Play List Finish!!`)
+        ;(queue.metadata as any).channel.send(`Musik sudah habis!!`)
     })
     client.once('ready', (c) => {
         console.log(`Ready! Logged in as ${c.user.tag}`)

@@ -22,9 +22,11 @@
         "@distube/ytdl-core": "^4.11.10",
         "@types/bson": "^4.2.0",
         "bson": "^5.3.0",
+        "chalk": "^4.1.2",
         "discord-player": "^6.5.0",
         "discord.js": "^14.11.0",
         "dotenv": "^16.3.0",
+        "mongoose": "^7.3.0",
         "opusscript": "^0.0.8",
         "play-dl": "^1.9.6",
         "ytdl-core": "^4.11.4"
