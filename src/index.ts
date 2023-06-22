@@ -27,8 +27,6 @@ const main = async () => {
         ],
     })
     const sound = new Player(client)
-    client.db.createStg(21, 'inquisitor', 483214, 1643979, 4948924, 27533)
-    sound.extractors.loadDefault()
     await sound.extractors.loadDefault()
 
     // If you dont want to use all of the extractors and register only the required ones manually, use
