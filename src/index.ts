@@ -31,7 +31,7 @@ const main = async () => {
 
     // If you dont want to use all of the extractors and register only the required ones manually, use
     await sound.extractors.register(SpotifyExtractor, {})
-
+    
     sound.events.on('playerStart', (queue, track) => {
         if (!queue.metadata) return
         ;(queue.metadata as any).channel.send(
