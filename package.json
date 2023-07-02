@@ -4,6 +4,7 @@
     "description": "",
     "main": "src/index.ts",
     "scripts": {
+        "start": "ts-node src/index.ts",
         "pm2": "NODE_ENV=production pm2 start src/index.ts --watch",
         "prettier": "prettier --write . --list-different",
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -28,7 +29,8 @@
         "dotenv": "^16.3.0",
         "mongoose": "^7.3.0",
         "opusscript": "^0.0.8",
-        "play-dl": "^1.9.6",
-        "ytdl-core": "^4.11.4"
+        "sodium": "^3.0.2",
+        "sodium-native": "^4.0.4",
+        "tweetnacl": "^1.0.3"
     }
 }

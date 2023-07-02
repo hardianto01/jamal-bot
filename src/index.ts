@@ -6,15 +6,18 @@ import * as fs from 'fs'
 import path from 'path'
 import { create } from './lib/client'
 import { ICommands } from './typing/command'
-import { Player } from 'discord-player'
-import { SpotifyExtractor } from '@discord-player/extractor'
+import { Player, useMasterPlayer } from 'discord-player'
+import { AppleMusicExtractor, SoundCloudExtractor, SpotifyExtractor, YoutubeExtractor } from '@discord-player/extractor'
+
+const data: any = JSON.parse(
+    fs.readFileSync('./spotify.json').toString('utf-8')
+)
 // import { registerCommands } from './register.command'
 
 export const commands = [] as ICommands[]
 
 const token = process.env.TOKEN
 const main = async () => {
-
     // connect to database
     await connect()
     // Create a new client instance
@@ -26,12 +29,17 @@ const main = async () => {
             GatewayIntentBits.GuildVoiceStates,
         ],
     })
-    const sound = new Player(client)
-    await sound.extractors.loadDefault()
-
-    // If you dont want to use all of the extractors and register only the required ones manually, use
-    await sound.extractors.register(SpotifyExtractor, {})
-    
+    const sound = useMasterPlayer() || new Player(client)
+    //If you dont want to use all of the extractors and register only the required ones manually, use
+    await sound.extractors.register(SpotifyExtractor, {
+        clientId: data.client_id,
+        clientSecret: data.client_secret,
+    })
+    await sound.extractors.register(YoutubeExtractor, {})
+    await sound.extractors.register(AppleMusicExtractor, {})
+    await sound.extractors.register(SoundCloudExtractor, {})
+    console.log(sound.scanDeps())
+    sound.on('debug', console.log)
     sound.events.on('playerStart', (queue, track) => {
         if (!queue.metadata) return
         ;(queue.metadata as any).channel.send(
