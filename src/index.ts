@@ -1,25 +1,21 @@
 // Require the necessary discord.js classes
-import { EmbedBuilder, Events, GatewayIntentBits } from 'discord.js'
 import 'dotenv/config'
-import connect from '../database/connect'
 import * as fs from 'fs'
 import path from 'path'
 import { create } from './lib/client'
+import connect from '../database/connect'
 import { ICommands } from './typing/command'
-import { Player, useMasterPlayer } from 'discord-player'
-import { AppleMusicExtractor, SoundCloudExtractor, SpotifyExtractor, YoutubeExtractor } from '@discord-player/extractor'
-
-const data: any = JSON.parse(
-    fs.readFileSync('./spotify.json').toString('utf-8')
-)
-// import { registerCommands } from './register.command'
+import { Player, useMainPlayer } from 'discord-player/dist'
+import { SpotifyExtractor } from '@discord-player/extractor'
+import { EmbedBuilder, Events, GatewayIntentBits } from 'discord.js'
 
 export const commands = [] as ICommands[]
-
 const token = process.env.TOKEN
+
 const main = async () => {
     // connect to database
     await connect()
+
     // Create a new client instance
     const client = new create({
         intents: [
@@ -29,17 +25,9 @@ const main = async () => {
             GatewayIntentBits.GuildVoiceStates,
         ],
     })
-    const sound = useMasterPlayer() || new Player(client)
-    //If you dont want to use all of the extractors and register only the required ones manually, use
-    await sound.extractors.register(SpotifyExtractor, {
-        clientId: data.client_id,
-        clientSecret: data.client_secret,
-    })
-    await sound.extractors.register(YoutubeExtractor, {})
-    await sound.extractors.register(AppleMusicExtractor, {})
-    await sound.extractors.register(SoundCloudExtractor, {})
-    console.log(sound.scanDeps())
-    sound.on('debug', console.log)
+
+    const sound = useMainPlayer() || new Player(client)
+    await sound.extractors.register(SpotifyExtractor, {})
     sound.events.on('playerStart', (queue, track) => {
         if (!queue.metadata) return
         ;(queue.metadata as any).channel.send(
@@ -78,6 +66,7 @@ const main = async () => {
     }
 
     client.on(Events.MessageCreate, async (m) => {
+        let msg = client.transactionMessage(m)
         const body = m.content
         const prefix = '!'
         const isCommand = body.startsWith(prefix)
@@ -88,6 +77,7 @@ const main = async () => {
         const obj = commands.find((obj) =>
             obj.command.find((s) => s.toLowerCase() == command.toLowerCase())
         )
+
         if (!obj) return
         if (query.includes('-help')) {
             m.reply({
@@ -95,7 +85,7 @@ const main = async () => {
             })
             return
         }
-        let extra = { client, player: sound, query }
+        let extra = { client, player: sound, query, msg }
         obj.execute(m as any, extra)
     })
     // Log in to Discord with your client's token
