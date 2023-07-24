@@ -5,8 +5,7 @@ export default {
     command: ['pet', 'pat'],
     desc: 'generator pat gif',
     async execute(interaction: Message, { msg }: Iextra) {
-        if (!msg?.isMedia)
-            return interaction.reply('Maaf Mebutuhkan Media Atau Gambar')
+        if (!msg?.isMedia) return interaction.reply('Maaf Mebutuhkan Media Atau Gambar')
         let animatedGif = await petPetGif(msg.url, {
             resolution: 200,
             delay: 20,

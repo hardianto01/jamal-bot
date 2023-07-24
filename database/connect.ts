@@ -5,10 +5,7 @@ import chalk from 'chalk'
 const main = async () => {
     connect(process.env.DATABASE_URL || '')
         .catch((error) => {
-            console.log(
-                'failed: connect to database with error: ',
-                format(error)
-            )
+            console.log('failed: connect to database with error: ', format(error))
         })
         .then((resp) => {
             if (resp) console.log(chalk.green('berhasil terhubung ke database'))

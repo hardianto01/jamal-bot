@@ -10,8 +10,7 @@ export class create extends Client {
 
     transactionMessage(messaga: Message<boolean>) {
         let attachment = messaga.attachments.toJSON()
-        let isMedia =
-            attachment.length > 0 ? (attachment[0].url ? true : false) : false
+        let isMedia = attachment.length > 0 ? (attachment[0].url ? true : false) : false
         let m: IMessage = {
             url: undefined,
             isMedia: false,

@@ -1,14 +1,7 @@
 import { stg, StgType } from './database'
 
 export class Stg {
-    async createStg(
-        stgx: number,
-        job: string,
-        mdef: number,
-        crit: number,
-        cdm: number,
-        fd: number
-    ) {
+    async createStg(stgx: number, job: string, mdef: number, crit: number, cdm: number, fd: number) {
         const make = await stg.findOne({ stg: stgx, job })
         if (make) return null
         const ins = await stg.create({

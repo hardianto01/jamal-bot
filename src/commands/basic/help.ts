@@ -18,8 +18,7 @@ export default {
         for (const category of categorys) {
             let menu = ``
             for (const cmd of commands) {
-                if (category == cmd.category)
-                    menu += prefix + cmd.command[0] + '\n'
+                if (category == cmd.category) menu += prefix + cmd.command[0] + '\n'
             }
             menu += '\n\n\n'
             embed.addFields({

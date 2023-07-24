@@ -7,8 +7,7 @@ export default {
     async execute(interaction: Message, { player, query }: Iextra) {
         const channel = interaction.member?.voice.channel
         if (!query) return interaction.reply('masukan query url/lagu')
-        if (!channel)
-            return interaction.reply('Maaf Kamu Tidak Terhubung Dalam Voice')
+        if (!channel) return interaction.reply('Maaf Kamu Tidak Terhubung Dalam Voice')
         try {
             const { track, extractor } = await player.play(channel, query, {
                 nodeOptions: {
@@ -31,13 +30,11 @@ export default {
                 .setTimestamp(track.durationMS)
                 .setFooter({
                     text: 'Hardianto',
-                    iconURL:
-                        'https://cdn.discordapp.com/avatars/544457189478105099/a_69721df05e9bfb26034ceb46f3776cab.webp?size=128',
+                    iconURL: 'https://cdn.discordapp.com/avatars/544457189478105099/a_69721df05e9bfb26034ceb46f3776cab.webp?size=128',
                 })
 
             return interaction.reply({ embeds: [exampleEmbed] })
         } catch (e) {
-            // let's return error if something failed
             return interaction.reply(`Something went wrong: ${e}`)
         }
     },
