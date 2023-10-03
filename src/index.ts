@@ -67,7 +67,7 @@ const main = async () => {
                     await obj?.execute(channel as any, { client })
                 }
             })
-        }, 10_000)
+        }, 3600000)
     })
 
     client.on('update.pact', (data) => {

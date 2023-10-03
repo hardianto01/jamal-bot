@@ -2,8 +2,9 @@ import { Client, Collection, EmbedBuilder, Message } from 'discord.js'
 import { Stg } from '../../database/stg'
 import { IMessage } from '../typing/message'
 import Keyv from 'keyv'
+import 'dotenv/config'
 
-const key = new Keyv('mongodb+srv://hardianto:delapann@cluster0.rzcfr.mongodb.net/bot-discord?retryWrites=true&w=majority')
+const key = new Keyv(process.env.DATABASE_URL)
 
 key.on('error', (err) => console.log('Connection Error', err))
 export class create extends Client {
