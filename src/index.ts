@@ -20,15 +20,15 @@ const main = async () => {
         intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildVoiceStates],
     })
 
-    const sound = new Player(client)
+    const sound = useMainPlayer() || new Player(client)
     await sound.extractors.register(SpotifyExtractor, {})
     sound.events.on('playerStart', (queue, track) => {
         if (!queue.metadata) return
-        ;(queue.metadata as any).channel.send(`Memutar Music **${track.title}**!`)
+        (queue.metadata as any).channel.send(`Memutar Music **${track.title}**!`)
     })
     sound.events.on('emptyQueue', (queue) => {
         if (!queue.metadata) return
-        ;(queue.metadata as any).channel.send(`Musik sudah habis!!`)
+        (queue.metadata as any).channel.send(`Musik sudah habis!!`)
     })
 
     const commandsPath = path.join(__dirname, 'commands')
@@ -93,8 +93,7 @@ const main = async () => {
         const prefixFixed = body.slice(prefix.length)
         const command = prefixFixed.split(' ')[0]
         const query = prefixFixed.replace(new RegExp(`^${command}\\s*`), '')
-        const obj = commands.find((obj) => obj.command.find((s) => s.toLowerCase() == command.toLowerCase()))
-
+        const obj = commands.find((obj) => !obj.event && obj.command.find((s) => s.toLowerCase() == command.toLowerCase()))
         if (!obj) return
         if (query.includes('-help')) {
             m.reply({

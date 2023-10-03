@@ -14,7 +14,7 @@ export default {
         const title = i.title.split('\n')[1].trim()
         const desc = i.title.split('\n')[2].trim()
         if (!isNew) return m?.keyv.set('update-dn', desc)
-        if (isNew == 'desc') return
+        if (isNew == desc) return
         const dates = i.title.split('\n')[3].trim()
         m?.keyv.set('update-dn', desc)
         const json = {
