@@ -3,7 +3,7 @@ import { Stg } from '../../database/stg'
 import { IMessage } from '../typing/message'
 import Keyv from 'keyv'
 
-const key = new Keyv('mongodb+srv://hardianto:delapann@cluster0.rzcfr.mongodb.net/bot-discord?retryWrites=true&w=majority')
+const key = new Keyv('xxx')
 
 key.on('error', (err) => console.log('Connection Error', err))
 export class create extends Client {
