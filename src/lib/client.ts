@@ -6,6 +6,7 @@ import 'dotenv/config'
 
 const key = new Keyv(process.env.DATABASE_URL)
 
+
 key.on('error', (err) => console.log('Connection Error', err))
 export class create extends Client {
     commands = new Collection()
