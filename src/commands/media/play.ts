@@ -9,6 +9,7 @@ export default {
         if (!query) return interaction.reply('masukan query url/lagu')
         if (!channel) return interaction.reply('Maaf Kamu Tidak Terhubung Dalam Voice')
         try {
+    if (!player) return 
             const { track, extractor } = await player.play(channel, query, {
                 nodeOptions: {
                     // nodeOptions are the options for guild node (aka your queue in simple word)

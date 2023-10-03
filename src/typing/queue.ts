@@ -4,7 +4,7 @@ import { IMessage } from './message'
 
 export type Iextra = {
     client?: create
-    player: Player
+    player?: Player
     query?: string | undefined
     msg?: IMessage
 }
