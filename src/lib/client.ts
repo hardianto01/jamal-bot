@@ -1,18 +1,17 @@
-import { Awaitable, Client, ClientEvents, Collection, EmbedBuilder, Message } from 'discord.js'
+import { Client, Collection, EmbedBuilder, Message } from 'discord.js'
 import { Stg } from '../../database/stg'
 import { IMessage } from '../typing/message'
 import Keyv from 'keyv'
 
 const key = new Keyv('mongodb+srv://hardianto:delapann@cluster0.rzcfr.mongodb.net/bot-discord?retryWrites=true&w=majority')
 
-key.on('error', err => console.log('Connection Error', err));
+key.on('error', (err) => console.log('Connection Error', err))
 export class create extends Client {
     commands = new Collection()
     sendMessageWithAuthor = async () => {
         const embed = new EmbedBuilder()
     }
-    
-    
+
     transactionMessage(messaga: Message<boolean>) {
         let attachment = messaga.attachments.toJSON()
         let isMedia = attachment.length > 0 ? (attachment[0].url ? true : false) : false
