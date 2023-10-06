@@ -6,7 +6,7 @@ import connect from '../database/connect'
 import { ICommands } from './typing/command'
 import { Player, useMainPlayer } from 'discord-player/dist'
 import { SpotifyExtractor } from '@discord-player/extractor'
-import { EmbedBuilder, Events, GatewayIntentBits, Interaction } from 'discord.js'
+import { ActivityType, EmbedBuilder, Events, GatewayIntentBits, Interaction } from 'discord.js'
 
 export const commands = [] as ICommands[]
 const token = process.env.TOKEN
@@ -50,6 +50,8 @@ const main = async () => {
             }
         }
     }
+    client.user?.setActivity((await client.keyv.get('status')) || '', { type: ActivityType.Watching })
+    client.user?.setStatus('idle')
 
     client.once('ready', (c) => {
         console.log(`Ready! Logged in as ${c.user.tag}`)
