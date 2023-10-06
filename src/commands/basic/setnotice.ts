@@ -2,7 +2,7 @@ import { Message } from 'discord.js'
 import { Iextra } from '../../typing/queue'
 
 export default {
-    command: ['setnotice'],
+    command: ['setnotif'],
     desc: 'menambahkan server untuk otomatisasi update web dn',
     async execute(message: Message, { client }: Iextra) {
         const guildId = message.guild?.id

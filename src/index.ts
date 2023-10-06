@@ -24,11 +24,11 @@ const main = async () => {
     await sound.extractors.register(SpotifyExtractor, {})
     sound.events.on('playerStart', (queue, track) => {
         if (!queue.metadata) return
-        (queue.metadata as any).channel.send(`Memutar Music **${track.title}**!`)
+        ;(queue.metadata as any).channel.send(`Memutar Music **${track.title}**!`)
     })
     sound.events.on('emptyQueue', (queue) => {
         if (!queue.metadata) return
-        (queue.metadata as any).channel.send(`Musik sudah habis!!`)
+        ;(queue.metadata as any).channel.send(`Musik sudah habis!!`)
     })
 
     const commandsPath = path.join(__dirname, 'commands')
@@ -54,34 +54,26 @@ const main = async () => {
     client.once('ready', (c) => {
         console.log(`Ready! Logged in as ${c.user.tag}`)
         setInterval(() => {
-            const obj = commands.find((obj) => obj.event == true)
-            client.guilds.cache.each(async function (x, i) {
-                const valid = await client.keyv.get(x.channels.guild.id)
-                if (valid) {
-                    const channel = client.channels.cache.get(valid.channelId)
-                    const webhooks = await channel?.fetch()
+            const files = commands.filter((obj) => obj.event == true)
+            for (let obj of files) {
+                client.guilds.cache.each(async function (x, i) {
+                    const valid = await client.keyv.get(x.channels.guild.id)
+                    if (valid) {
+                        const channel = client.channels.cache.get(valid.channelId)
+                        const webhooks = await channel?.fetch()
 
-                    if (!webhooks) {
-                        return console.log('No webhook was found that I can use!')
+                        if (!webhooks) {
+                            return console.log('No webhook was found that I can use!')
+                        }
+                        await obj?.execute(channel as any, { client })
                     }
-                    await obj?.execute(channel as any, { client })
-                }
-            })
+                })
+            }
         }, 3600000)
     })
 
-    client.on('update.pact', (data) => {
-        const embed = new EmbedBuilder()
-            .setColor('#0099ff')
-            .setTitle(data.title)
-            .setDescription(data.desc)
-            .setURL(data.url || '')
-            .addFields([{ name: data.dates + ' ', value: 'Silahkan Cek Di Sini [Link](' + data.url + ')' }])
-            .setFooter({
-                text: 'Dragon Nest SEA',
-                iconURL: 'https://e7.pngegg.com/pngimages/388/464/png-clipart-dragon-nest-logo-game-font-dragon-nest-m-legendary-creature-game.png',
-            })
-        data.client.send({ embeds: [embed] })
+    client.on('update.pact', (embed, client) => {
+        client.send({ embeds: [embed] })
     })
 
     client.on(Events.MessageCreate, async (m) => {
