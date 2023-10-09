@@ -50,8 +50,6 @@ const main = async () => {
             }
         }
     }
-    client.user?.setActivity((await client.keyv.get('status')) || '', { type: ActivityType.Watching })
-    client.user?.setStatus('idle')
 
     client.once('ready', (c) => {
         console.log(`Ready! Logged in as ${c.user.tag}`)
