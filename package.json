@@ -7,6 +7,7 @@
         "start": "ts-node src/index.ts",
         "pm2": "NODE_ENV=production pm2 start src/index.ts --watch",
         "prettier": "prettier --write . --list-different",
+        "build": "eccho \"Hello Word\"",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [
